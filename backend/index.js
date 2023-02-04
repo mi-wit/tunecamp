@@ -24,7 +24,6 @@ spotifyWebApi.clientCredentialsGrant().then(
 
         const rs = await python("./recomendation.py");
         const spotifySongsData = await rs.read_data()
-        // console.log(spotifySongsData);
 
         const songs = [
             { 'name': 'Everything In Its Right Place', 'year': 2000 },
@@ -39,9 +38,7 @@ spotifyWebApi.clientCredentialsGrant().then(
         ];
 
         const songsNotInDataSet = await rs.get_songs_not_present_in_dataset(spotifySongsData, songs);
-        // console.log(['songs not in dataset', songsNotInDataSet]);
         const missingSongs = await getMissingSongs(await songsNotInDataSet.valueOf());
-        // console.log(['found missing songs', missingSongs]);
         const supplementedDataset = await fillDataSetWithMissingSongs(spotifySongsData, missingSongs);
 
         console.log(await rs.recommend_songs(songs, supplementedDataset));
@@ -90,7 +87,7 @@ spotifyWebApi.clientCredentialsGrant().then(
                     return data
                 },
                 function(err) {
-                    console.log(`error occurred: ${err}`);
+                    console.log(`error occurred, during searching for track: ${err}`);
                 }
             );
         }
@@ -104,6 +101,7 @@ spotifyWebApi.clientCredentialsGrant().then(
                 delete missingSong.track_href;
                 delete missingSong.analysis_url;
                 delete missingSong.time_signature;
+                
                 const song = await pd.DataFrame([missingSong]);
                 _spotifySongsData = await _spotifySongsData.append$(song, {ignore_index: true});
             }

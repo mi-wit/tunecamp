@@ -13,9 +13,9 @@ def read_data():
     data['artists'] = data['artists'].apply(lambda x: x[1:-1].replace("'", ''))
     return data
 
-# Przygotowanie scalera w celu standaryzacji danych.
+# Przygotowanie scaler'a w celu standaryzacji danych.
 # Dzięki temu dane będzie można wykorzystać w żądanym formacie od -1 do 1
-def scale_songs_numeric_data(data):
+def fit_songs_numeric_data(data):
 
     all_songs_pipeline = Pipeline([('scaler', StandardScaler())], verbose=False)
 
@@ -52,7 +52,6 @@ def get_song_data(song, spotify_data):
     
     except IndexError:
         song_data = None
-        # song_data = find_song(song['name'], song['year'])
         return song_data
         
 
@@ -85,25 +84,29 @@ def flatten_dict_list(dict_list):
     return flattened_dict
 
 
-def recommend_songs(song_list, spotify_data, n_songs=10):
+def recommend_songs(input_song_list, spotify_data, n_songs=10):
     
-    all_songs_pipeline = scale_songs_numeric_data(spotify_data)
-
-    metadata_cols = ['name', 'year', 'artists']
-    song_dict = flatten_dict_list(song_list)
+    # Fit the numeric data of all songs in spotify_data (compute the mean)
+    all_songs_pipeline = fit_songs_numeric_data(spotify_data)
     
     # Find mean of songs attributes from input list
-    song_center = get_mean_vector(song_list, spotify_data)
-    # Transform all songs dataset attributes
+    song_center = get_mean_vector(input_song_list, spotify_data)
+    # Scale the numeric data of all songs in spotify_data
     scaled_data = all_songs_pipeline.transform(spotify_data[number_cols])
-    # Transform input song
+    # Scale the numeric data of song_center using the same pipeline
     scaled_song_center = all_songs_pipeline.transform(song_center.reshape(1, -1))
     
-    # Calculate distances (Songs closest to input songs)
+    # Calculate cosine distances (Songs closest to input songs)
     distances = cdist(scaled_song_center, scaled_data, 'cosine')
-    # Sort and pick best ones
+    # Get index'es of the n_songs closest to song_center
     index = list(np.argsort(distances)[:, :n_songs][0])
     
-    rec_songs = spotify_data.iloc[index]
-    rec_songs = rec_songs[~rec_songs['name'].isin(song_dict['name'])]
-    return rec_songs[metadata_cols].to_dict(orient='records')
+    # Create a dictionary from input_song_list
+    song_dict = flatten_dict_list(input_song_list)
+    # Select recommended songs from spotify_data using index'es
+    recommended_songs = spotify_data.iloc[index]
+    # Filter out songs that are already in song_list
+    recommended_songs = recommended_songs[~recommended_songs['name'].isin(song_dict['name'])]
+    
+    metadata_cols = ['name', 'year', 'artists']
+    return recommended_songs[metadata_cols].to_dict(orient='records')

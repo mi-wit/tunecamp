@@ -108,5 +108,5 @@ def recommend_songs(input_song_list, spotify_data, n_songs=10):
     # Filter out songs that are already in song_list
     recommended_songs = recommended_songs[~recommended_songs['name'].isin(song_dict['name'])]
     
-    metadata_cols = ['name', 'year', 'artists']
-    return recommended_songs[metadata_cols].to_dict(orient='records')
+    metadata_cols = ['name', 'year', 'artists', 'id']
+    return recommended_songs[metadata_cols].to_json(orient='records')

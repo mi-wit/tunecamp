@@ -34,7 +34,6 @@ spotifyWebApi.clientCredentialsGrant().then(
             { 'name': 'Song that does not exist', 'year': 1800},
             { 'name': 'You Will Never Work In Television Again', 'year': 2022},
             { 'name': 'We Don\'t Know What Tomorrow Brings', 'year': 2022},
-
         ];
 
         const songsNotInDataSet = await rs.get_songs_not_present_in_dataset(spotifySongsData, songs);
@@ -101,7 +100,7 @@ spotifyWebApi.clientCredentialsGrant().then(
                 delete missingSong.track_href;
                 delete missingSong.analysis_url;
                 delete missingSong.time_signature;
-                
+
                 const song = await pd.DataFrame([missingSong]);
                 _spotifySongsData = await _spotifySongsData.append$(song, {ignore_index: true});
             }

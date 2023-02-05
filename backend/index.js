@@ -112,7 +112,7 @@ app.post('/recommend', async (req, res) => {
 
 app.get('/search', async (req, res) => {
     const results = await spotifyWebApi.searchTracks(req.query.q);
-    res.status(200).json(results);
+    res.status(results.statusCode).json(results);
 });
 
 app.listen(port, () => {

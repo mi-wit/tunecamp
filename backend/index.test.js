@@ -63,6 +63,6 @@ describe("GET /search", () => {
     });
 
     it("Should return songs", async () => {
-        expect(response.body.body.tracks.items[0]).toHaveProperty('name', 'id', 'artists');
+        expect(response.body.body.tracks.items[0]).toHaveProperty('name', 'id', 'artists', 'release_day');
     });
 });

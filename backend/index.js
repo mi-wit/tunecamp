@@ -1,11 +1,17 @@
 import { python } from "pythonia";
 import SpotifyWebApi from 'spotify-web-api-node';
 import express from 'express';
+import bodyParser from 'express';
 
 const app = new express();
 const port = 3000
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
 
-app.get('/recommend', (req, res) => {
+
+app.post('/recommend', (req, res) => {
+    const songs = req.body;
 
     // credentials are optional
     var spotifyWebApi = new SpotifyWebApi({
@@ -31,23 +37,12 @@ app.get('/recommend', (req, res) => {
             const rs = await python("./recomendation.py");
             const spotifySongsData = await rs.read_data()
 
-            const songs = [
-                { 'name': 'Everything In Its Right Place', 'year': 2000 },
-                { 'name': 'Smells Like Teen Spirit', 'year': 1991 },
-                { 'name': 'Optimistic', 'year': 2000 },
-                { 'name': 'Karma Police', 'year': 1997 },
-                { 'name': 'No Surprises', 'year': 1997 },
-                { 'name': 'Song that does not exist', 'year': 1800 },
-                { 'name': 'You Will Never Work In Television Again', 'year': 2022 },
-                { 'name': 'We Don\'t Know What Tomorrow Brings', 'year': 2022 },
-            ];
-
             const songsNotInDataSet = await rs.get_songs_not_present_in_dataset(spotifySongsData, songs);
             const missingSongs = await getMissingSongs(await songsNotInDataSet.valueOf());
             const supplementedDataset = await fillDataSetWithMissingSongs(spotifySongsData, missingSongs);
 
             const results = await rs.recommend_songs(songs, supplementedDataset);
-            res.send(JSON.stringify(results, null, "\t"));
+            res.status(200).json(results);
 
 
             python.exit();

@@ -4,7 +4,7 @@
   "description": "Backend API with recommendation system for Spotify",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "author": "Michał Witkowski",
   "license": "ISC",
@@ -13,5 +13,10 @@
     "pythonia": "^1.0.1",
     "spotify-web-api-node": "^5.0.2"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "jest": "^29.4.1",
+    "supertest": "^6.3.3"
+  } 
+  
 }

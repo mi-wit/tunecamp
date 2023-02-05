@@ -5,7 +5,7 @@ import express from 'express';
 const app = new express();
 const port = 3000
 
-app.get('/', (req, res) => {
+app.get('/recommend', (req, res) => {
 
     // credentials are optional
     var spotifyWebApi = new SpotifyWebApi({

@@ -33,3 +33,36 @@ describe("POST /recommend", () => {
         expect(song).toHaveProperty('name');
     });
 });
+
+describe("GET /search", () => {
+
+    let response;
+    beforeAll(async () => {
+        const q = `Radiohead creep`;
+        const query = {
+            q: q,
+        };
+        response = await request(baseURL).get("/search").query(query);
+    });
+
+    it("Should return not null", async () => {
+        expect(response).not.toBeNull();
+    });
+
+    it("Should return 200", async () => {
+        expect(response.statusCode).toBe(200);
+    });
+
+    it("Should return Radiohead Creep", async () => {
+        expect(response.body.body.tracks.items[0].name).toBe('Creep');
+    });
+
+    it("Should return few songs", async () => {
+        expect(response.body.body.tracks.items.length).toBeGreaterThan(0);
+        expect(response.body.body.tracks.items.length).toBeLessThan(30);
+    });
+
+    it("Should return songs", async () => {
+        expect(response.body.body.tracks.items[0]).toHaveProperty('name', 'id', 'artists');
+    });
+});

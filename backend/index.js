@@ -9,32 +9,29 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
 
+// credentials are optional
+var spotifyWebApi = new SpotifyWebApi({
+    clientId: 'f202f5c368574d2090c0ebb673923466',
+    clientSecret: 'a3d32684fd8c461bbc783bdca305ef14'
+});
+// Retrieve an access token.
+await spotifyWebApi.clientCredentialsGrant().then(
+    function (data) {
+        // Save the access token so that it's used in future calls
+        spotifyWebApi.setAccessToken(data.body['access_token']);
 
-app.post('/recommend', (req, res) => {
+        // console.log('The access token ' + data.body['access_token']);
+        // console.log('The access token is ' + spotifyApi.getAccessToken());
+        return spotifyWebApi
+    },
+    function (err) {
+        console.log('Something went wrong when retrieving an access token', err);
+    }
+);
+
+app.post('/recommend', async (req, res) => {
     const songs = req.body;
-
-    // credentials are optional
-    var spotifyWebApi = new SpotifyWebApi({
-        clientId: 'f202f5c368574d2090c0ebb673923466',
-        clientSecret: 'a3d32684fd8c461bbc783bdca305ef14'
-    });
-    // Retrieve an access token.
-    spotifyWebApi.clientCredentialsGrant().then(
-        function (data) {
-            // Save the access token so that it's used in future calls
-            spotifyWebApi.setAccessToken(data.body['access_token']);
-
-            // console.log('The access token ' + data.body['access_token']);
-            // console.log('The access token is ' + spotifyApi.getAccessToken());
-            return spotifyWebApi
-        },
-        function (err) {
-            console.log('Something went wrong when retrieving an access token', err);
-        }
-    ).then(
-        async function (spotifyApi) {
-
-            const rs = await python("./recomendation.py");
+    const rs = await python("./recomendation.py");
             const spotifySongsData = await rs.read_data()
 
             const songsNotInDataSet = await rs.get_songs_not_present_in_dataset(spotifySongsData, songs);
@@ -67,7 +64,7 @@ app.post('/recommend', (req, res) => {
                 }
 
                 const ids = missingSongs.map(song => song.id);
-                const audioForAllTracksFeatures = await spotifyApi.getAudioFeaturesForTracks(ids);
+                const audioForAllTracksFeatures = await spotifyWebApi.getAudioFeaturesForTracks(ids);
 
                 for (const song of missingSongs) {
                     const audioTrackFeatures =
@@ -83,7 +80,7 @@ app.post('/recommend', (req, res) => {
             }
 
             async function searchForTrack(_name, _year) {
-                return spotifyApi.searchTracks(`track:${_name} year:${_year}`)
+                return spotifyWebApi.searchTracks(`track:${_name} year:${_year}`)
                     .then(
                         function (data) {
                             return data
@@ -110,11 +107,16 @@ app.post('/recommend', (req, res) => {
 
                 return _spotifySongsData;
             }
+});
 
-        }
-    );
 
-})
+app.get('/search', async (req, res) => {
+    console.log(req.query);
+
+    const results = await spotifyWebApi.searchTracks(req.query.q);
+    console.log(results.body.tracks);
+    res.status(200).json(results);
+});
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

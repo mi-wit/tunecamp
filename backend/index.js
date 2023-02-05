@@ -2,12 +2,14 @@ import { python } from "pythonia";
 import SpotifyWebApi from 'spotify-web-api-node';
 import express from 'express';
 import bodyParser from 'express';
+import cors from 'express';
 
 const app = new express();
 const port = 3000
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
+app.use(cors());
 
 // credentials are optional
 var spotifyWebApi = new SpotifyWebApi({
@@ -29,7 +31,7 @@ await spotifyWebApi.clientCredentialsGrant().then(
     }
 );
 
-app.post('/recommend', async (req, res) => {
+app.post('/api/recommend', async (req, res) => {
     const songs = req.body;
     const rs = await python("./recomendation.py");
             const spotifySongsData = await rs.read_data()
@@ -110,7 +112,7 @@ app.post('/recommend', async (req, res) => {
 });
 
 
-app.get('/search', async (req, res) => {
+app.get('/api/search', async (req, res) => {
     const results = await spotifyWebApi.searchTracks(req.query.q);
     res.status(results.statusCode).json(results);
 });

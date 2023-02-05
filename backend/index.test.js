@@ -1,5 +1,5 @@
 import request from "supertest";
-const baseURL = "http://localhost:3000";
+const baseURL = "http://localhost:3000/api";
 
 describe("POST /recommend", () => {
     const DEFAULT_NUM_OF_RECOMMENDATIONS = 5;

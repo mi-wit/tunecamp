@@ -14,18 +14,20 @@ describe("POST /recommend", () => {
         { 'name': 'We Don\'t Know What Tomorrow Brings', 'year': 2022 },
     ];
 
+    let response;
+    beforeAll(async () => {
+        response = await request(baseURL).post("/recommend").send(inputSongs);
+    });
+
     it("Should return 200", async () => {
-        const response = await request(baseURL).post("/recommend").send(inputSongs);
         expect(response.statusCode).toBe(200);
     });
     
     it("Should return at least 5 recommendations", async () => {
-        const response = await request(baseURL).post("/recommend").send(inputSongs);
         expect(JSON.parse(response.body).length).toBeGreaterThan(DEFAULT_NUM_OF_RECOMMENDATIONS);
     });
 
     it("Should return songs", async () => {
-        const response = await request(baseURL).post("/recommend").send(inputSongs);
         const song = JSON.parse(response.body)[0];
         expect(song).toHaveProperty('id');
         expect(song).toHaveProperty('name');

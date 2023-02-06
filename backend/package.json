@@ -9,6 +9,7 @@
   "author": "Michał Witkowski",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "pythonia": "^1.0.1",
     "spotify-web-api-node": "^5.0.2"
@@ -17,6 +18,5 @@
   "devDependencies": {
     "jest": "^29.4.1",
     "supertest": "^6.3.3"
-  } 
-  
+  }
 }

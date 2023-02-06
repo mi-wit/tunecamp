@@ -2,7 +2,7 @@ import { python } from "pythonia";
 import SpotifyWebApi from 'spotify-web-api-node';
 import express from 'express';
 import bodyParser from 'express';
-import cors from 'express';
+import cors from 'cors';
 
 const app = new express();
 const port = 3000

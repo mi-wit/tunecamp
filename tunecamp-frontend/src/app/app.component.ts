@@ -9,6 +9,8 @@ import { ApiService } from './services/api.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
+  year = new Date().getFullYear();
+
   inputSongs = [
     { 'name': 'Everything In Its Right Place', 'year': 2000 },
     { 'name': 'Smells Like Teen Spirit', 'year': 1991 },

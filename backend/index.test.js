@@ -66,3 +66,11 @@ describe("GET /search", () => {
         expect(response.body.body.tracks.items[0]).toHaveProperty('name', 'id', 'artists', 'release_day');
     });
 });
+
+// describe("Get /search, but empty", () => {
+//     it("Should return error code 400", async () => {
+//         const res = await request(baseURL).get("/search");
+//         console.log(res);
+//         expect(res.statusCode).toBe(400);
+//     });
+// });

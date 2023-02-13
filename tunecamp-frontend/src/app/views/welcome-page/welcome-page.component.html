@@ -17,7 +17,7 @@
                 <label class="block text-blue-300 py-2 font-bold mb-2" for="songSearch">
                     Search for songs
                 </label>
-                <app-search></app-search>
+                <app-search (songPicked)="redirectToPicking($event)"></app-search>
             </div>
         </form>
     </div>

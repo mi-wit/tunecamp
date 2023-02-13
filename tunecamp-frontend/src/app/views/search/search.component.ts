@@ -25,6 +25,7 @@ export class SearchComponent {
   }
 
   onTrackPick(song: SearchedSong): void {
+    this.apiService.firstPickedSong = song;
     this.songPicked.emit(song);    
   }
 }

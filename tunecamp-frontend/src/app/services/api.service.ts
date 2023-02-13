@@ -10,7 +10,7 @@ import { Song } from '../models/Song';
 })
 export class ApiService {
 
-  // searchTerm$ = new BehaviorSubject<string>('');
+  firstPickedSong: SearchedSong | null = null;
 
   constructor(private http: HttpClient) { }
 

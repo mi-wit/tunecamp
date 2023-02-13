@@ -25,8 +25,7 @@ export class SearchComponent {
   }
 
   onTrackPick(song: SearchedSong): void {
-    console.log(song);
-    
+    this.songPicked.emit(song);    
   }
 }
 

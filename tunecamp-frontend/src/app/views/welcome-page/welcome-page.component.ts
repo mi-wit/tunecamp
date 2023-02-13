@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { SearchedSong } from 'src/app/models/searched-song';
 
 @Component({
   selector: 'app-welcome-page',

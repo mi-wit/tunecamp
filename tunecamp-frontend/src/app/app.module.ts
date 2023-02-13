@@ -10,14 +10,23 @@ import { SearchComponent } from './views/search/search.component';
 import {MatFormFieldModule} from '@angular/material/form-field'; 
 import {MatInputModule} from '@angular/material/input'; 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SongPickingComponent } from './views/song-picking/song-picking.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomePageComponent,
-    SearchComponent
+    SearchComponent,
+    SongPickingComponent
   ],
   imports: [
+    RouterModule.forRoot([
+      {path: 'welcome-page', component: WelcomePageComponent},
+      {path: 'song-picking', component: SongPickingComponent},
+      {path: '', redirectTo: 'welcome-page', pathMatch: 'full'},
+      {path: '**', redirectTo: 'welcome-page', pathMatch: 'full'},
+    ]),
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,

@@ -4,7 +4,15 @@
         class="shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
         placeholder="Pick one" aria-label="Number" [formControl]="searchField" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-            {{option}}
+        <mat-option *ngFor="let song of filteredOptions | async" [value]="song">
+            <div class="py-2">
+                <img class="inline mr-4" [src]="song.album.images[2].url" alt="album image">
+                <span>{{song.artists[0].name}}</span>
+                <span *ngFor="let artist of song.artists.slice(1)">, {{artist.name}}</span>
+                <span> - </span>
+                <span>{{song.name}}</span>
+            </div>
+            
         </mat-option>
+
     </mat-autocomplete>

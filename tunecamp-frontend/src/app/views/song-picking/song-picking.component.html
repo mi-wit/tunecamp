@@ -24,7 +24,7 @@
 
     <!-- picked songs -->
     <div *ngIf="pickedSongs.length > 0" class="bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
-        <div *ngFor="let song of pickedSongs">
+        <div class="my-2" *ngFor="let song of pickedSongs">
             
             <app-song-row-display [song]="song"></app-song-row-display>
         </div>

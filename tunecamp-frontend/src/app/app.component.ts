@@ -26,12 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private api: ApiService) {}
   
   ngOnInit(): void {
-    // this.api.getRecommendations(this.inputSongs)
-    //   .pipe(takeUntil(this._unsubscribeAll))
-    //   .subscribe({
-    //     next: (recommendations: any) => {this.recommendations = recommendations},
-    //     error: (e) => console.error(e)
-    //   });
+
   }
   
   

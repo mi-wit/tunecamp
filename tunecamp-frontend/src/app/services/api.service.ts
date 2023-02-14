@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environment';
+import { RecommendedSong } from '../models/recommended-song';
 import { SearchedSong, SearchedSongResponse, Tracks } from '../models/searched-song';
 import { Song } from '../models/Song';
 
@@ -15,8 +16,9 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getRecommendations(inputSongs: Song[]): Observable<Song[]> {
-    return this.http.post<Song[]>(`${environment.config.api.url}/api/recommend`, inputSongs);
+  getRecommendations(inputSongs: Song[]): Observable<RecommendedSong[]> {
+    return this.http.post<string>(`${environment.config.api.url}/api/recommend`, inputSongs)
+    .pipe(map(response => JSON.parse(response)));
   }
 
   getSearch(term: string): Observable<Tracks> {

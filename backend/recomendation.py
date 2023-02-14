@@ -19,7 +19,8 @@ def fit_songs_numeric_data(data):
 
     all_songs_pipeline = Pipeline([('scaler', StandardScaler())], verbose=False)
 
-    X = data.select_dtypes(np.number)
+    # X = data.select_dtypes(np.number)
+    X = data[number_cols].values
     # number_cols = list(X.columns)
     all_songs_pipeline.fit(X)
 
@@ -92,7 +93,7 @@ def recommend_songs(input_song_list, spotify_data, n_songs=10):
     # Find mean of songs attributes from input list
     song_center = get_mean_vector(input_song_list, spotify_data)
     # Scale the numeric data of all songs in spotify_data
-    scaled_data = all_songs_pipeline.transform(spotify_data[number_cols])
+    scaled_data = all_songs_pipeline.transform(spotify_data[number_cols].values)
     # Scale the numeric data of song_center using the same pipeline
     scaled_song_center = all_songs_pipeline.transform(song_center.reshape(1, -1))
     

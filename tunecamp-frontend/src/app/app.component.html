@@ -1,5 +1,5 @@
-<div class="leading-normal tracking-normal text-indigo-400 bg-cover bg-fixed" style="background-image: url('./assets/header.png');">
-  <div class="h-full">
+<div class="leading-normal h-full tracking-normal text-indigo-400 bg-cover bg-fixed" style="background-image: url('./assets/header.png');">
+  <div class="">
     <!--Nav-->
     <div class="w-full container mx-auto">
       <div class="w-full flex items-center justify-between">
@@ -36,14 +36,14 @@
       <div class="w-full">
         <router-outlet></router-outlet>
       </div>
-
+    </div>
 
       <!--Footer-->
-      <div class="w-full pt-16 pb-6 text-sm text-center md:text-left fade-in">
+      <footer class="w-full p-6 absolute bottom-0 h-20  
+                    text-sm text-center md:text-left fade-in">
         <a class="text-gray-500 no-underline hover:no-underline" href="#">&copy; {{this.year}}</a>
         <span class="text-gray-500">- App by </span>
         <a class="no-underline hover:no-underline" href="https://github.com/mi-wit">Michał Witkowski</a>
-      </div>
-    </div>
+      </footer>
   </div>
 </div>

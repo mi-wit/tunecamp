@@ -41,7 +41,10 @@ app.post('/api/recommend', async (req, res) => {
             const supplementedDataset = await fillDataSetWithMissingSongs(spotifySongsData, missingSongs);
 
             const results = await rs.recommend_songs(songs, supplementedDataset);
-            res.status(200).json(results);
+
+            const tracksWithAllInfo = await getAllTracksInfo(results);
+
+            res.status(200).json(tracksWithAllInfo);
 
 
             python.exit();
@@ -108,6 +111,11 @@ app.post('/api/recommend', async (req, res) => {
                 }
 
                 return _spotifySongsData;
+            }
+
+            async function getAllTracksInfo(tracks) {
+                const ids = JSON.parse(tracks).map((track) => track.id);
+                return await spotifyWebApi.getTracks(ids);
             }
 });
 

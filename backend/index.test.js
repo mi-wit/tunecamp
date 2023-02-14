@@ -17,6 +17,7 @@ describe("POST /recommend", () => {
     let response;
     beforeAll(async () => {
         response = await request(baseURL).post("/recommend").send(inputSongs);
+        console.log(response.body);
     });
 
     it("Should return 200", async () => {
@@ -24,13 +25,14 @@ describe("POST /recommend", () => {
     });
     
     it("Should return at least 5 recommendations", async () => {
-        expect(JSON.parse(response.body).length).toBeGreaterThan(DEFAULT_NUM_OF_RECOMMENDATIONS);
+        expect(response.body.body.tracks.length).toBeGreaterThan(DEFAULT_NUM_OF_RECOMMENDATIONS);
     });
 
     it("Should return songs", async () => {
-        const song = JSON.parse(response.body)[0];
+        const song = response.body.body.tracks[0];
         expect(song).toHaveProperty('id');
         expect(song).toHaveProperty('name');
+        expect(song).toHaveProperty('album');
     });
 });
 

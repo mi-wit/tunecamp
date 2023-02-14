@@ -17,4 +17,8 @@ export class SongPickingComponent implements OnInit{
       this.pickedSongs.push(this.apiService.firstPickedSong);
     }
   }
+
+  songPicked(song: SearchedSong): void {
+    this.pickedSongs.push(song);
+  }
 }

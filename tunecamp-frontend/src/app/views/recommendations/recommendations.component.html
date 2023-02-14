@@ -1,14 +1,59 @@
-<div class="bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
+<div class="flex flex-col w-full justify-center lg:items-start overflow-y-hidden">
 
-    <div *ngIf="(recommendations | async) as list; else loading">
-        <div *ngFor="let song of list" class="my-2">
-            <app-song-row-display [song]="song"></app-song-row-display>
-        </div>
+    <!-- recommend button -->
+    <div class="flex items-center justify-between w-full px-4 mb-4">
+        <button
+            class="
+            bg-gradient-to-r 
+            to-purple-800 
+            from-green-500 
+            enabled:hover:to-pink-500 
+            enabled:hover:from-green-500 
+            text-white font-bold 
+            py-3 px-3 
+            rounded focus:ring transform transition enabled:hover:scale-105 duration-300 ease-in-out 
+            disabled:opacity-25
+            disabled:cursor-not-allowed"
+            type="button"
+            (click)="redirectToSongPicking()"
+            >
+            Sart over again
+        </button>
+
+        <button
+            [disabled]="true"
+            class="
+            bg-gradient-to-r 
+            to-purple-800 
+            from-green-500 
+            enabled:hover:to-pink-500 
+            enabled:hover:from-green-500 
+            text-white font-bold 
+            py-3 px-3 
+            rounded focus:ring transform transition enabled:hover:scale-105 duration-300 ease-in-out 
+            disabled:opacity-25
+            disabled:cursor-not-allowed"
+            type="button"
+            
+            >
+            <div class="inline-block align-middle">Save in</div>
+            <div class="inline-block align-middle">
+                <img class="opacity-100 w-20 pl-3" src="./assets/Spotify_Logo_RGB_White.png" alt="">
+            </div>
+        </button>
     </div>
 
-    <ng-template #loading>
-        <mat-spinner></mat-spinner>
-    </ng-template>
-
-</div>
+    <div class="bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
+        <div *ngIf="(recommendations | async) as list; else loading">
+            <div *ngFor="let song of list" class="my-2">
+                <app-song-row-display [song]="song"></app-song-row-display>
+            </div>
+        </div>
+        
+        <ng-template #loading>
+            <mat-spinner></mat-spinner>
+        </ng-template>
+        
+    </div>
+</div>    
 

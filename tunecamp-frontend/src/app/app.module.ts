@@ -12,13 +12,15 @@ import {MatInputModule} from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SongPickingComponent } from './views/song-picking/song-picking.component';
 import { RouterModule } from '@angular/router';
+import { SongRowDisplayComponent } from './views/song-row-display/song-row-display.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomePageComponent,
     SearchComponent,
-    SongPickingComponent
+    SongPickingComponent,
+    SongRowDisplayComponent
   ],
   imports: [
     RouterModule.forRoot([

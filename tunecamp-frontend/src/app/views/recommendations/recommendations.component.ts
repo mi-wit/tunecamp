@@ -35,4 +35,9 @@ export class RecommendationsComponent implements OnInit{
     this.recommendations = this.apiService.getRecommendations(trimmedSongs);
 
   }
+
+  redirectToSongPicking(): void {
+    this.router.navigate(['/song-picking']);
+    
+  }
 }

@@ -11,6 +11,7 @@ import { Song } from '../models/Song';
 export class ApiService {
 
   firstPickedSong: SearchedSong | null = null;
+  pickedSongs: SearchedSong[] = [];
 
   constructor(private http: HttpClient) { }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SearchedSong } from 'src/app/models/searched-song';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -10,7 +11,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class SongPickingComponent implements OnInit{
 
   pickedSongs: SearchedSong[] = [];
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit() {
     if (this.apiService.firstPickedSong) {
@@ -20,5 +21,12 @@ export class SongPickingComponent implements OnInit{
 
   songPicked(song: SearchedSong): void {
     this.pickedSongs.push(song);
+  }
+
+  redirectToRecommendations(songs: SearchedSong[]): void {
+    if (songs.length > 0) {
+      this.apiService.pickedSongs = songs;
+      this.router.navigate(['/recommendations']);
+    }
   }
 }

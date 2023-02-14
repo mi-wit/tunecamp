@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SongPickingComponent } from './views/song-picking/song-picking.component';
 import { RouterModule } from '@angular/router';
 import { SongRowDisplayComponent } from './views/song-row-display/song-row-display.component';
+import { RecommendationsComponent } from './views/recommendations/recommendations.component';
 
 @NgModule({
   declarations: [
@@ -20,12 +21,14 @@ import { SongRowDisplayComponent } from './views/song-row-display/song-row-displ
     WelcomePageComponent,
     SearchComponent,
     SongPickingComponent,
-    SongRowDisplayComponent
+    SongRowDisplayComponent,
+    RecommendationsComponent
   ],
   imports: [
     RouterModule.forRoot([
       {path: 'welcome-page', component: WelcomePageComponent},
       {path: 'song-picking', component: SongPickingComponent},
+      {path: 'recommendations', component: RecommendationsComponent},
       {path: '', redirectTo: 'welcome-page', pathMatch: 'full'},
       {path: '**', redirectTo: 'welcome-page', pathMatch: 'full'},
     ]),

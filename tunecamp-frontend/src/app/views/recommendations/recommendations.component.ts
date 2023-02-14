@@ -14,7 +14,7 @@ import { Song } from '../../models/Song';
 })
 export class RecommendationsComponent implements OnInit{
 
-  recommendations: Observable<RecommendedSong[]> | null = null;
+  recommendations: Observable<SearchedSong[]> | null = null;
   constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {

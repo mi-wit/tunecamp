@@ -15,12 +15,14 @@ import { Song } from '../../models/Song';
 export class RecommendationsComponent implements OnInit{
 
   recommendations: Observable<SearchedSong[]> | null = null;
+  loading: boolean = true;
   constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
     const inputSongs = this.apiService.pickedSongs;
     if (inputSongs.length <= 0) {
       this.router.navigate(['/song-picking']);
+      this.loading = true;
     }
 
     const trimmedSongs: Song[] = inputSongs.map((song: SearchedSong) => {

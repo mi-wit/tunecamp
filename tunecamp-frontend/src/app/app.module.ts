@@ -15,6 +15,7 @@ import { SongPickingComponent } from './views/song-picking/song-picking.componen
 import { RouterModule } from '@angular/router';
 import { SongRowDisplayComponent } from './views/song-row-display/song-row-display.component';
 import { RecommendationsComponent } from './views/recommendations/recommendations.component';
+import {MatIconModule} from '@angular/material/icon'; 
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { RecommendationsComponent } from './views/recommendations/recommendation
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatIconModule,
     FormsModule,
     ReactiveFormsModule
   ],

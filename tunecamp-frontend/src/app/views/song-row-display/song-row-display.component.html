@@ -1,5 +1,5 @@
 <ng-container class="w-full flex" *ngIf="song">
-    <div class="py-2 truncate felx flex-row self-center items-center w-full">
+    <div class="py-2 truncate felx flex-row self-center items-center align-middle w-full">
         <div class="inline-block">
             <img class="inline mr-4" [src]="song.album.images[2].url" alt="album image">
         </div>
@@ -23,13 +23,19 @@
         </div>
 
 
-        <div *ngIf="showPlaybackButton" class="inline-block align-middle float-right">
-            <button *ngIf="!showPreviewSpinner" class="align-middle hover:text-red-600"
-            (click)="playbackButtonClicked(song)"
-            >Hear</button>
-            <button *ngIf="showPreviewSpinner" class="align-middle hover:text-red-600"
-            (click)="stopPlaybackButtonClicked(song)"
-            >Stop</button>
+        <div *ngIf="showPlaybackButton" class=" align-middle flex items-center float-right h-14">
+            <button *ngIf="!showPreviewSpinner" 
+                    class="align-middle flex items-center justify-center hover:text-pink-500"
+                    (click)="playbackButtonClicked(song)"
+                >
+                <mat-icon class="mx-2" fontIcon="play_circle"></mat-icon>Hear
+            </button>
+            <button *ngIf="showPreviewSpinner" 
+                    class="align-middle flex items-center justify-center hover:text-pink-500"
+                    (click)="stopPlaybackButtonClicked(song)"
+                >
+                <mat-icon class="mx-2" fontIcon="stop_circle"></mat-icon>Stop
+            </button>
         </div>
     </div>
 </ng-container>

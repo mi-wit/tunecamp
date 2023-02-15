@@ -27,6 +27,7 @@ export class RecommendationsComponent implements OnInit{
 
     const trimmedSongs: Song[] = inputSongs.map((song: SearchedSong) => {
       return {
+        id: song.id,
         name: song.name,
         year: new Date(song.album.release_date).getFullYear()
       };

@@ -2,7 +2,7 @@
 
     <input type="text"
         class="shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
-        placeholder="All I Need - Radiohead" aria-label="Number" [formControl]="searchField" [matAutocomplete]="auto">
+        placeholder="Search for songs" aria-label="Number" [formControl]="searchField" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let song of filteredOptions | async" 
                     

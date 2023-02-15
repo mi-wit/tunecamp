@@ -1,13 +1,18 @@
-<ng-container *ngIf="song">
-    <div class="py-2 truncate felx self-center inline items-center">
+<ng-container class="w-full flex" *ngIf="song">
+    <div class="py-2 truncate felx flex-row self-center items-center w-full">
         <div class="inline-block">
             <img class="inline mr-4" [src]="song.album.images[2].url" alt="album image">
         </div>
-        <div class="inline-block align-middle">
+        <div class="inline-block align-middle text-gray-100">
             <span class="font-semibold">{{song.name}}</span>
             <br/>
             <span>{{song.artists[0].name}}</span>
             <span *ngFor="let artist of song.artists.slice(1)">, {{artist.name}}</span>
+        </div>
+        <div *ngIf="showRemoveButton" class="inline-block align-middle float-right">
+            <button class="align-middle hover:text-red-600"
+            (click)="removeButtonClick(song)"
+            >Remove</button>
         </div>
         
     </div>

@@ -29,4 +29,8 @@ export class SongPickingComponent implements OnInit{
       this.router.navigate(['/recommendations']);
     }
   }
+
+  removeSong(song: SearchedSong): void {
+    this.pickedSongs.splice(this.pickedSongs.findIndex(s => s.id === song.id), 1);
+  }
 }

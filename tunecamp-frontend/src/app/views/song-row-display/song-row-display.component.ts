@@ -18,18 +18,24 @@ export class SongRowDisplayComponent {
   @Output()
   musicButtonClicked: EventEmitter<SearchedSong> = new EventEmitter();
   @Input()
-  showMusicButton: boolean = false;
+  showPlaybackButton: boolean = false;
 
   @Input()
   previewTime: number = 100;
   @Input()
   showPreviewSpinner: boolean = false;
+  @Output()
+  stopPlaybackClicked: EventEmitter<SearchedSong> = new EventEmitter();
 
   removeButtonClick(song: SearchedSong): void {
     this.removeSongClicked.emit(song);
   }
 
-  showMusicButtonClicked(song: SearchedSong): void {
+  playbackButtonClicked(song: SearchedSong): void {
     this.musicButtonClicked.emit(song);
+  }
+
+  stopPlaybackButtonClicked(song: SearchedSong): void {
+    this.stopPlaybackClicked.emit(song);
   }
 }

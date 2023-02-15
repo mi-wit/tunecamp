@@ -23,10 +23,13 @@
         </div>
 
 
-        <div *ngIf="showMusicButton" class="inline-block align-middle float-right">
-            <button class="align-middle hover:text-red-600"
-            (click)="showMusicButtonClicked(song)"
+        <div *ngIf="showPlaybackButton" class="inline-block align-middle float-right">
+            <button *ngIf="!showPreviewSpinner" class="align-middle hover:text-red-600"
+            (click)="playbackButtonClicked(song)"
             >Hear</button>
+            <button *ngIf="showPreviewSpinner" class="align-middle hover:text-red-600"
+            (click)="stopPlaybackButtonClicked(song)"
+            >Stop</button>
         </div>
     </div>
 </ng-container>

@@ -19,6 +19,7 @@ export class RecommendationsComponent implements OnInit, AfterViewInit {
   audio: HTMLAudioElement;
   previewTime: number = 100;
   playedSong: SearchedSong | null = null
+  isPreviewPlaying: boolean = false;
 
   constructor(private apiService: ApiService, private router: Router) {
     this.audio = new Audio();
@@ -55,6 +56,7 @@ export class RecommendationsComponent implements OnInit, AfterViewInit {
   redirectToSongPicking(): void {
     if (this.audio) {
       this.audio.pause();
+      this.isPreviewPlaying = false;
     }
     this.router.navigate(['/song-picking']);
   }
@@ -66,6 +68,15 @@ export class RecommendationsComponent implements OnInit, AfterViewInit {
       this.audio.src = song.preview_url;
       this.audio.load();
       this.audio.play(); 
+      this.isPreviewPlaying = true;
     }
   }
+
+  stopPlayback(song: SearchedSong): void {
+    if (this.audio) {
+      this.audio.pause();
+      this.isPreviewPlaying = false;
+    }
+  }
+
 }

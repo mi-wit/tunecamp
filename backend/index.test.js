@@ -4,14 +4,42 @@ const baseURL = "http://localhost:3000/api";
 describe("POST /recommend", () => {
     const DEFAULT_NUM_OF_RECOMMENDATIONS = 5;
     const inputSongs = [
-        { 'name': 'Everything In Its Right Place', 'year': 2000 },
-        { 'name': 'Smells Like Teen Spirit', 'year': 1991 },
-        { 'name': 'Optimistic', 'year': 2000 },
-        { 'name': 'Karma Police', 'year': 1997 },
-        { 'name': 'No Surprises', 'year': 1997 },
-        { 'name': 'Song that does not exist', 'year': 1800 },
-        { 'name': 'You Will Never Work In Television Again', 'year': 2022 },
-        { 'name': 'We Don\'t Know What Tomorrow Brings', 'year': 2022 },
+        { 'id': '2kRFrWaLWiKq48YYVdGcm8', 'name': 'Everything In Its Right Place', 'year': 2000 },
+        { 'id': '4CeeEOM32jQcH3eN9Q2dGj', 'name': 'Smells Like Teen Spirit', 'year': 1991 },
+        { 'id': '1FoUsSi9BCTlNt2Vd7V8XA', 'name': 'Optimistic', 'year': 2000 },
+        { 'id': '63OQupATfueTdZMWTxW03A', 'name': 'Karma Police', 'year': 1997 },
+        { 'id': '10nyNJ6zNy2YVYLrcwLccB', 'name': 'No Surprises', 'year': 1997 },
+        { 'id': '', 'name': 'Song that does not exist', 'year': 1800 },
+        { 'id': '2ownDSIYHvydbtauGZW4ln', 'name': 'You Will Never Work In Television Again', 'year': 2022 },
+        { 'id': '0ks2zjjl7XhJVqBU60GhHR', 'name': 'We Don\'t Know What Tomorrow Brings', 'year': 2022 },
+    ];
+
+    let response;
+    beforeAll(async () => {
+        response = await request(baseURL).post("/recommend").send(inputSongs);
+        console.log(response.body);
+    });
+
+    it("Should return 200", async () => {
+        expect(response.statusCode).toBe(200);
+    });
+    
+    it("Should return at least 5 recommendations", async () => {
+        expect(response.body.body.tracks.length).toBeGreaterThan(DEFAULT_NUM_OF_RECOMMENDATIONS);
+    });
+
+    it("Should return songs", async () => {
+        const song = response.body.body.tracks[0];
+        expect(song).toHaveProperty('id');
+        expect(song).toHaveProperty('name');
+        expect(song).toHaveProperty('album');
+    });
+});
+
+describe("POST /recommend but one song that does not exist", () => {
+    const DEFAULT_NUM_OF_RECOMMENDATIONS = 5;
+    const inputSongs = [
+        { 'id': '66pyIjGqsggVOBIcKl2oKS', 'name': 'Metropolis', 'year': 2021 },
     ];
 
     let response;

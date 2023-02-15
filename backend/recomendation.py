@@ -31,8 +31,7 @@ def get_songs_not_present_in_dataset(spotify_data, songs):
 
     for song in songs:
         try:
-            song_data = spotify_data[(spotify_data['name'] == song['name']) 
-                                    & (spotify_data['year'] == song['year'])].iloc[0]
+            song_data = spotify_data[(spotify_data['id'] == song['id'])].iloc[0]
         except IndexError:
             not_present_songs.append(song)
 
@@ -47,8 +46,7 @@ number_cols = ['valence', 'year', 'acousticness', 'danceability', 'duration_ms',
 def get_song_data(song, spotify_data):
     
     try:
-        song_data = spotify_data[(spotify_data['name'] == song['name']) 
-                                & (spotify_data['year'] == song['year'])].iloc[0]
+        song_data = spotify_data[(spotify_data['id'] == song['id'])].iloc[0]
         return song_data
     
     except IndexError:

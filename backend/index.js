@@ -49,63 +49,67 @@ app.post('/api/recommend', async (req, res) => {
 
     python.exit();
 
-    async function getMissingSongs(_songsNotInDataset) {
-        const missingSongs = [];
-
-        const ids = _songsNotInDataset.map((track) => track.id);
-        const results = await spotifyWebApi.getTracks(ids);
-        for (const missingSong of results.body.tracks) {
-            if (missingSong) {
-                missingSongs.push(
-                {
-                    id: missingSong.id,
-                    name: missingSong.name,
-                    year: missingSong.year,
-                    explicit: Number(missingSong.explicit),
-                    duration_ms: missingSong.duration_ms,
-                    popularity: missingSong.popularity
-                });
-            }
-        }
-
-        const ids_for_features = missingSongs.map(song => song.id);
-        const audioForAllTracksFeatures = await spotifyWebApi.getAudioFeaturesForTracks(ids_for_features);
-
-        for (const song of missingSongs) {
-            const audioTrackFeatures =
-                audioForAllTracksFeatures.body.audio_features
-                    .find(features => features.id === song.id);
-
-            for (let key in audioTrackFeatures) {
-                const value = audioTrackFeatures[key];
-                song[key] = value;
-            }
-        }
-        return missingSongs;
-    }
-
-    async function fillDataSetWithMissingSongs(_spotifySongsData, _missingSongs) {
-        const pd = await python('pandas');
-        for await (const missingSong of _missingSongs) {
-            delete missingSong.type;
-            delete missingSong.uri;
-            delete missingSong.track_href;
-            delete missingSong.analysis_url;
-            delete missingSong.time_signature;
-
-            const song = await pd.DataFrame([missingSong]);
-            _spotifySongsData = await _spotifySongsData.append$(song, { ignore_index: true });
-        }
-
-        return _spotifySongsData;
-    }
-
-    async function getAllTracksInfo(_tracks) {
-        const ids = JSON.parse(_tracks).map((track) => track.id);
-        return await spotifyWebApi.getTracks(ids);
-    }
 });
 
+async function getMissingSongs(_songsNotInDataset) {
+    if (_songsNotInDataset.length <= 0) {
+        return [];
+    }
+
+    const missingSongs = [];
+
+    const ids = _songsNotInDataset.map((track) => track.id);
+    const results = await spotifyWebApi.getTracks(ids);
+    for (const missingSong of results.body.tracks) {
+        if (missingSong) {
+            missingSongs.push(
+            {
+                id: missingSong.id,
+                name: missingSong.name,
+                year: missingSong.year,
+                explicit: Number(missingSong.explicit),
+                duration_ms: missingSong.duration_ms,
+                popularity: missingSong.popularity
+            });
+        }
+    }
+
+    const ids_for_features = missingSongs.map(song => song.id);
+    const audioForAllTracksFeatures = await spotifyWebApi.getAudioFeaturesForTracks(ids_for_features);
+
+    for (const song of missingSongs) {
+        const audioTrackFeatures =
+            audioForAllTracksFeatures.body.audio_features
+                .find(features => features.id === song.id);
+
+        for (let key in audioTrackFeatures) {
+            const value = audioTrackFeatures[key];
+            song[key] = value;
+        }
+    }
+    return missingSongs;
+}
+
+async function fillDataSetWithMissingSongs(_spotifySongsData, _missingSongs) {
+    const pd = await python('pandas');
+    for await (const missingSong of _missingSongs) {
+        delete missingSong.type;
+        delete missingSong.uri;
+        delete missingSong.track_href;
+        delete missingSong.analysis_url;
+        delete missingSong.time_signature;
+
+        const song = await pd.DataFrame([missingSong]);
+        _spotifySongsData = await _spotifySongsData.append$(song, { ignore_index: true });
+    }
+
+    return _spotifySongsData;
+}
+
+async function getAllTracksInfo(_tracks) {
+    const ids = JSON.parse(_tracks).map((track) => track.id);
+    return await spotifyWebApi.getTracks(ids);
+}
 
 app.get('/api/search', async (req, res) => {
     const results = await spotifyWebApi.searchTracks(req.query.q)

@@ -36,10 +36,38 @@ describe("POST /recommend", () => {
     });
 });
 
-describe("POST /recommend but one song that does not exist", () => {
+describe("POST /recommend only one song that does not exist in dataset", () => {
     const DEFAULT_NUM_OF_RECOMMENDATIONS = 5;
     const inputSongs = [
         { 'id': '66pyIjGqsggVOBIcKl2oKS', 'name': 'Metropolis', 'year': 2021 },
+    ];
+
+    let response;
+    beforeAll(async () => {
+        response = await request(baseURL).post("/recommend").send(inputSongs);
+        console.log(response.body);
+    });
+
+    it("Should return 200", async () => {
+        expect(response.statusCode).toBe(200);
+    });
+    
+    it("Should return at least 5 recommendations", async () => {
+        expect(response.body.body.tracks.length).toBeGreaterThan(DEFAULT_NUM_OF_RECOMMENDATIONS);
+    });
+
+    it("Should return songs", async () => {
+        const song = response.body.body.tracks[0];
+        expect(song).toHaveProperty('id');
+        expect(song).toHaveProperty('name');
+        expect(song).toHaveProperty('album');
+    });
+});
+
+describe("POST /recommend only one song that already exist in dataset", () => {
+    const DEFAULT_NUM_OF_RECOMMENDATIONS = 5;
+    const inputSongs = [
+        { 'id': '1mea3bSkSGXuIRvnydlB5b', 'name': 'Viva La Vida', 'year': 2008 },
     ];
 
     let response;

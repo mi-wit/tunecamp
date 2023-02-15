@@ -49,6 +49,8 @@
                 <app-song-row-display 
                 [song]="song"
                 [showMusicButton]="song.preview_url != null"
+                [previewTime]="previewTime"
+                [showPreviewSpinner]="playedSong != null && (song.id === playedSong.id)"
                 (musicButtonClicked)="playTrackSample($event)"
                 ></app-song-row-display>
             </div>

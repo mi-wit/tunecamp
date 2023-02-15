@@ -20,6 +20,11 @@ export class SongRowDisplayComponent {
   @Input()
   showMusicButton: boolean = false;
 
+  @Input()
+  previewTime: number = 100;
+  @Input()
+  showPreviewSpinner: boolean = false;
+
   removeButtonClick(song: SearchedSong): void {
     this.removeSongClicked.emit(song);
   }

@@ -15,6 +15,14 @@
             >Remove</button>
         </div>
 
+        <div class="inline-block align-middle float-right mx-6" *ngIf="showPreviewSpinner">
+            <mat-spinner 
+                [mode]="'determinate'" 
+                [value]="previewTime"
+                [diameter]="40"></mat-spinner>
+        </div>
+
+
         <div *ngIf="showMusicButton" class="inline-block align-middle float-right">
             <button class="align-middle hover:text-red-600"
             (click)="showMusicButtonClicked(song)"

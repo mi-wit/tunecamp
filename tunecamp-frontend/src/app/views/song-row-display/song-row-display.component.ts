@@ -15,7 +15,16 @@ export class SongRowDisplayComponent {
   @Input()
   showRemoveButton: boolean = false;
 
+  @Output()
+  musicButtonClicked: EventEmitter<SearchedSong> = new EventEmitter();
+  @Input()
+  showMusicButton: boolean = false;
+
   removeButtonClick(song: SearchedSong): void {
     this.removeSongClicked.emit(song);
+  }
+
+  showMusicButtonClicked(song: SearchedSong): void {
+    this.musicButtonClicked.emit(song);
   }
 }

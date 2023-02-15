@@ -16,6 +16,9 @@ export class RecommendationsComponent implements OnInit{
 
   recommendations: Observable<SearchedSong[]> | null = null;
   loading: boolean = true;
+
+  private audio = new Audio();
+
   constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
@@ -39,6 +42,13 @@ export class RecommendationsComponent implements OnInit{
 
   redirectToSongPicking(): void {
     this.router.navigate(['/song-picking']);
-    
+  }
+
+  playTrackSample(song: SearchedSong): void {
+    if (song.preview_url) {
+      this.audio.src = song.preview_url;
+      this.audio.load();
+      this.audio.play(); 
+    }
   }
 }

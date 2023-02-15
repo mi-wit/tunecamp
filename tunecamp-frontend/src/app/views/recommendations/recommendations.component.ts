@@ -39,7 +39,9 @@ export class RecommendationsComponent implements OnInit, AfterViewInit {
       };
     });
 
-    this.recommendations = this.apiService.getRecommendations(trimmedSongs);
+    if (trimmedSongs.length > 0) {
+      this.recommendations = this.apiService.getRecommendations(trimmedSongs);
+    }
   }
 
   ngAfterViewInit(): void {

@@ -16,7 +16,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getRecommendations(inputSongs: Song[]): Observable<SearchedSong[]> {   
+  getRecommendations(inputSongs: Song[]): Observable<SearchedSong[]> {
     return this.http.post<any>(`${environment.config.api.url}/api/recommend`, inputSongs)
     .pipe(map(response => {
       return response.body.tracks;

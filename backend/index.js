@@ -38,7 +38,6 @@ app.post('/api/recommend', async (req, res) => {
 
     const songsNotInDataSet = await rs.get_songs_not_present_in_dataset(spotifySongsData, songs);
     const missingSongs = await getMissingSongs(await songsNotInDataSet.valueOf());
-    console.log(missingSongs);
     const supplementedDataset = await fillDataSetWithMissingSongs(spotifySongsData, missingSongs);
     const results = await rs.recommend_songs(songs, supplementedDataset);
     

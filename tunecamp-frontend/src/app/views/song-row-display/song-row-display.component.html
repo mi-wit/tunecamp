@@ -1,7 +1,8 @@
 <ng-container *ngIf="song">
    
         <div class="flex-shrink-0">
-            <img class="h-12 w-12" [src]="song.album.images[2].url" alt="album image">
+            <img *ngIf="song.album.images[2]" class="h-12 w-12" [src]="song.album.images[2].url" alt="album image">
+            <img *ngIf="!song.album.images[2]" class="h-12 w-12" [src]="'https://via.placeholder.com/150'" alt="album image">
         </div>
         <div class="ml-4">
             <h3 class="text-sm font-semibold text-gray-200">{{song.name}}</h3>

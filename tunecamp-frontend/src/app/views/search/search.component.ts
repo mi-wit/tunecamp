@@ -20,7 +20,13 @@ export class SearchComponent {
 
   ngOnInit() {
     this.filteredOptions = this.searchField.valueChanges.pipe(
-      autocomplete(500, ((searchTerm: any) => this.apiService.getSearch(searchTerm))),
+      autocomplete(500, ((searchTerm: any) => {
+        if (searchTerm) {
+          return this.apiService.getSearch(searchTerm);
+        } else {
+          return of({tracks: []});
+        }
+      })),
       map((tracks: Tracks) => tracks.items));
   }
 

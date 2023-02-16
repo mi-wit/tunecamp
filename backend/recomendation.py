@@ -90,6 +90,7 @@ def recommend_songs(input_song_list, spotify_data, n_songs=10):
     
     # Find mean of songs attributes from input list
     song_center = get_mean_vector(input_song_list, spotify_data)
+    print(song_center)
     # Scale the numeric data of all songs in spotify_data
     scaled_data = all_songs_pipeline.transform(spotify_data[number_cols].values)
     # Scale the numeric data of song_center using the same pipeline

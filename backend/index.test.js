@@ -90,8 +90,9 @@ describe("POST /recommend returning same songs for different input", () => {
     });
 
     it("Should not be the same weird songs", async () => {
+        console.log(response.body.body.tracks);
         const song = response.body.body.tracks[0];
-        expect(song.artists[0]).not().toBe('Sergei Rachmaninoff');
+        expect(song.artists[0]).not.toBe('Sergei Rachmaninoff');
     });
 });
 

@@ -1,14 +1,17 @@
-<ng-container class="w-full flex" *ngIf="song">
-    <div class="py-6 break-words felx flex-row self-center items-center align-middle w-full ">
-        <div class="inline-block">
-            <img class="inline mr-4" [src]="song.album.images[2].url" alt="album image">
+<ng-container *ngIf="song">
+   
+        <div class="flex-shrink-0">
+            <img class="h-12 w-12" [src]="song.album.images[2].url" alt="album image">
         </div>
-        <div class="inline-block align-middle text-gray-100">
-            <span class="font-semibold break-words">{{song.name}}</span>
-            <br/>
-            <span>{{song.artists[0].name}}</span>
-            <span *ngFor="let artist of song.artists.slice(1)">, {{artist.name}}</span>
+        <div class="ml-4">
+            <h3 class="text-sm font-semibold text-gray-200">{{song.name}}</h3>
+            <span class="text-sm text-gray-100">{{song.artists[0].name}}</span>
+            <span class="text-sm text-gray-100" *ngFor="let artist of song.artists.slice(1)">, {{artist.name}}</span>
         </div>
+
+        
+        <!-- buttons -->
+
         <div *ngIf="showRemoveButton" class="inline-block align-middle float-right">
             <button class="align-middle hover:text-red-600"
             (click)="removeButtonClick(song)"
@@ -37,5 +40,5 @@
                 <mat-icon class="mx-2" fontIcon="stop_circle"></mat-icon>Stop
             </button>
         </div>
-    </div>
+    
 </ng-container>

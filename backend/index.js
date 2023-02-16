@@ -3,6 +3,7 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import express from 'express';
 import bodyParser from 'express';
 import cors from 'cors';
+import router from 'express';
 
 const app = new express();
 const port = 3000
@@ -10,6 +11,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
 app.use(cors());
+
+app.use(express.static('../tunecamp-frontend/dist/tunecamp-frontend', {root: '.'}));
 
 // credentials are optional
 var spotifyWebApi = new SpotifyWebApi({

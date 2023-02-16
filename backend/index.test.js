@@ -17,7 +17,6 @@ describe("POST /recommend", () => {
     let response;
     beforeAll(async () => {
         response = await request(baseURL).post("/recommend").send(inputSongs);
-        console.log(response.body);
     });
 
     it("Should return 200", async () => {
@@ -45,7 +44,6 @@ describe("POST /recommend only one song that does not exist in dataset", () => {
     let response;
     beforeAll(async () => {
         response = await request(baseURL).post("/recommend").send(inputSongs);
-        console.log(response.body);
     });
 
     it("Should return 200", async () => {
@@ -64,16 +62,15 @@ describe("POST /recommend only one song that does not exist in dataset", () => {
     });
 });
 
-describe("POST /recommend only one song that already exist in dataset", () => {
+describe("POST /recommend returning same songs for different input", () => {
     const DEFAULT_NUM_OF_RECOMMENDATIONS = 5;
     const inputSongs = [
-        { 'id': '1mea3bSkSGXuIRvnydlB5b', 'name': 'Viva La Vida', 'year': 2008 },
+        { 'id': '3acVF2BODFmqy6igvdJjZP', 'name': 'AAAAA', 'year': 2018 },
     ];
 
     let response;
     beforeAll(async () => {
         response = await request(baseURL).post("/recommend").send(inputSongs);
-        console.log(response.body);
     });
 
     it("Should return 200", async () => {
@@ -89,6 +86,11 @@ describe("POST /recommend only one song that already exist in dataset", () => {
         expect(song).toHaveProperty('id');
         expect(song).toHaveProperty('name');
         expect(song).toHaveProperty('album');
+    });
+
+    it("Should not be the same weird songs", async () => {
+        const song = response.body.body.tracks[0];
+        expect(song.artists[0]).not().toBe('Sergei Rachmaninoff');
     });
 });
 

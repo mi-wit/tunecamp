@@ -31,7 +31,7 @@ await spotifyWebApi.clientCredentialsGrant().then(
     }
 );
 
-app.post('/api/recommend', async (req, res) => {
+app.post('/api/recommend', wrapAsync( async (req, res) => {
     const songs = req.body;
     const rs = await python("./recomendation.py");
     const spotifySongsData = await rs.read_data();
@@ -48,7 +48,7 @@ app.post('/api/recommend', async (req, res) => {
 
     python.exit();
 
-});
+}));
 
 async function getMissingSongs(_songsNotInDataset) {
     if (_songsNotInDataset.length <= 0) {
@@ -110,7 +110,7 @@ async function getAllTracksInfo(_tracks) {
     return await spotifyWebApi.getTracks(ids);
 }
 
-app.get('/api/search', async (req, res) => {
+app.get('/api/search', wrapAsync(async (req, res) => {
     const results = await spotifyWebApi.searchTracks(req.query.q)
     .then((data) => {
         res.json(data);
@@ -118,9 +118,16 @@ app.get('/api/search', async (req, res) => {
         res.json(error);
     });
 
-});
+}));
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
 
+
+// used for handling async errors
+function wrapAsync(fn) {
+    return function(req, res, next) {
+      fn(req, res, next).catch(next);
+    };
+  }

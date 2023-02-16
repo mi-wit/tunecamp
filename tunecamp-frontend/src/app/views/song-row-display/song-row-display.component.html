@@ -1,10 +1,10 @@
 <ng-container class="w-full flex" *ngIf="song">
-    <div class="py-2 truncate felx flex-row self-center items-center align-middle w-full">
+    <div class="py-6 break-words felx flex-row self-center items-center align-middle w-full ">
         <div class="inline-block">
             <img class="inline mr-4" [src]="song.album.images[2].url" alt="album image">
         </div>
         <div class="inline-block align-middle text-gray-100">
-            <span class="font-semibold">{{song.name}}</span>
+            <span class="font-semibold break-words">{{song.name}}</span>
             <br/>
             <span>{{song.artists[0].name}}</span>
             <span *ngFor="let artist of song.artists.slice(1)">, {{artist.name}}</span>

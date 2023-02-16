@@ -66,6 +66,7 @@ describe("POST /recommend returning same songs for different input", () => {
     const DEFAULT_NUM_OF_RECOMMENDATIONS = 5;
     const inputSongs = [
         { 'id': '3acVF2BODFmqy6igvdJjZP', 'name': 'AAAAA', 'year': 2018 },
+        { 'id': '1mea3bSkSGXuIRvnydlB5b', 'name': 'Viva La Vida', 'year': 2008 },
     ];
 
     let response;

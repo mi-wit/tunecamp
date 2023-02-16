@@ -16,6 +16,9 @@ export class SongPickingComponent implements OnInit{
   ngOnInit() {
     if (this.apiService.firstPickedSong) {
       this.pickedSongs.push(this.apiService.firstPickedSong);
+      this.apiService.firstPickedSong = null;
+    } else if (this.apiService.pickedSongs.length > 0) {
+      this.pickedSongs = this.apiService.pickedSongs;
     }
   }
 
@@ -24,6 +27,8 @@ export class SongPickingComponent implements OnInit{
   }
 
   redirectToRecommendations(songs: SearchedSong[]): void {
+    this.apiService.firstPickedSong = null;
+
     if (songs.length > 0) {
       this.apiService.pickedSongs = songs;
       this.router.navigate(['/recommendations']);

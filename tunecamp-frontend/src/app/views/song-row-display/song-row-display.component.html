@@ -12,13 +12,13 @@
         
         <!-- buttons -->
 
-        <div *ngIf="showRemoveButton" class="inline-block align-middle float-right">
+        <div *ngIf="showRemoveButton" class="align-middle ml-auto">
             <button class="align-middle hover:text-red-600"
             (click)="removeButtonClick(song)"
             >Remove</button>
         </div>
 
-        <div class="inline-block align-middle float-right mx-6" *ngIf="showPreviewSpinner">
+        <div class="align-middle ml-auto mx-6" *ngIf="showPreviewSpinner">
             <mat-spinner 
                 [mode]="'determinate'" 
                 [value]="previewTime"
@@ -26,7 +26,7 @@
         </div>
 
 
-        <div *ngIf="showPlaybackButton" class=" align-middle flex items-center float-right h-14">
+        <div *ngIf="showPlaybackButton" class=" align-middle flex ml-auto h-14">
             <button *ngIf="!showPreviewSpinner" 
                     class="align-middle flex items-center justify-center hover:text-pink-500"
                     (click)="playbackButtonClicked(song)"

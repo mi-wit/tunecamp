@@ -64,7 +64,10 @@
         </ul>
         
         <ng-template #loading>
-            <mat-spinner [diameter]="40" [color]="'accent'"></mat-spinner>
+            <div class="flex align-middle items-center">
+                <mat-spinner [diameter]="40" [color]="'accent'"></mat-spinner>
+                <span class="pl-4 text-gray-300">Just a moment...</span>
+            </div>
         </ng-template>
         
     </div>

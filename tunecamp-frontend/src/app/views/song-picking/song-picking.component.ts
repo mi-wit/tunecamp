@@ -38,4 +38,8 @@ export class SongPickingComponent implements OnInit{
   removeSong(song: SearchedSong): void {
     this.pickedSongs.splice(this.pickedSongs.findIndex(s => s.id === song.id), 1);
   }
+
+  clearList(): void {
+    this.pickedSongs = [];
+  }
 }

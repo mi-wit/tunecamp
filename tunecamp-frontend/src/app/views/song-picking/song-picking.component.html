@@ -20,7 +20,23 @@
             >
             Get Recommendations
         </button>
+
+    <!-- clear list button -->
+
+        <button
+            *ngIf="pickedSongs.length > 0"
+            class="
+            bg-transparent
+            py-2 px-5
+            hover:text-red-600
+            "
+            type="button"
+            (click)="clearList()"
+            >
+            Clear list
+        </button>
     </div>
+
 
     <!-- picked songs -->
     <div *ngIf="pickedSongs.length > 0" class="bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">

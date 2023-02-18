@@ -13,12 +13,6 @@
         
         <!-- buttons -->
 
-        <div *ngIf="showRemoveButton" class="align-middle ml-auto pr-2">
-            <button class="align-middle hover:text-red-600"
-            (click)="removeButtonClick(song)"
-            >Remove</button>
-        </div>
-
         <div class="align-middle ml-auto mx-6" *ngIf="showPreviewSpinner">
             <mat-spinner 
                 [mode]="'determinate'" 
@@ -26,15 +20,27 @@
                 [diameter]="40"></mat-spinner>
         </div>
 
+        
+        <div class=" align-middle flex ml-auto h-14 pr-2">
+            <a *ngIf="song.external_urls.spotify" 
+                [href]="song.external_urls.spotify" 
+                target="_blank"
+                class="align-middle flex items-center justify-center sm:mx-4 mx-2 text-xs text-gray-500 hover:text-gray-300 text-right"
+                >Open in Spotify</a>
 
-        <div *ngIf="showPlaybackButton" class=" align-middle flex ml-auto h-14 pr-2">
-            <button *ngIf="!showPreviewSpinner" 
+
+            <button *ngIf="showRemoveButton" class="align-middle flex items-center justify-center hover:text-red-600"
+            (click)="removeButtonClick(song)"
+            >Remove</button>
+
+            
+            <button *ngIf="!showPreviewSpinner && showPlaybackButton" 
                     class="align-middle flex items-center justify-center hover:text-pink-500"
                     (click)="playbackButtonClicked(song)"
                 >
                 <mat-icon class="mx-2" fontIcon="play_circle"></mat-icon>Hear
             </button>
-            <button *ngIf="showPreviewSpinner" 
+            <button *ngIf="showPreviewSpinner && showPlaybackButton" 
                     class="align-middle flex items-center justify-center hover:text-pink-500"
                     (click)="stopPlaybackButtonClicked(song)"
                 >

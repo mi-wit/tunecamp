@@ -1,7 +1,7 @@
 
 
     <input type="text"
-        class="shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
+        class="shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-101 duration-300 ease-in-out"
         placeholder="Search for songs" aria-label="Number" [formControl]="searchField" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete">
         <mat-option class="bg-gray-900" *ngFor="let song of filteredOptions | async" 

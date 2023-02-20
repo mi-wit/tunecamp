@@ -60,6 +60,11 @@ describe("POST /recommend only one song that does not exist in dataset", () => {
         expect(song).toHaveProperty('name');
         expect(song).toHaveProperty('album');
     });
+
+    it("Should not contain input song", async () => {
+        const songs = response.body.body.tracks;
+        expect(songs).not.toContain(inputSongs);
+    });
 });
 
 describe("POST /recommend returning same songs for different input", () => {
@@ -90,11 +95,30 @@ describe("POST /recommend returning same songs for different input", () => {
     });
 
     it("Should not be the same weird songs", async () => {
-        console.log(response.body.body.tracks);
         const song = response.body.body.tracks[0];
         expect(song.artists[0]).not.toBe('Sergei Rachmaninoff');
     });
 });
+
+describe("POST /recommend but empty input list", () => {
+    const DEFAULT_NUM_OF_RECOMMENDATIONS = 5;
+    const inputSongs = [];
+
+    let response;
+    beforeAll(async () => {
+        response = await request(baseURL).post("/recommend").send(inputSongs);
+    });
+
+    it("Should not return 500", async () => {
+        expect(response.statusCode).toBe(500);
+    });
+
+    it("Should not return songs", async () => {
+        const song = response?.body?.body?.tracks[0];
+        expect(song).toBeUndefined();
+    });
+});
+
 
 describe("GET /search", () => {
 

@@ -21,6 +21,16 @@
             Get Recommendations
         </button>
 
+        <span 
+            *ngIf="pickedSongs.length > 0 && pickedSongs.length < 5"
+            class="py-2 px-4
+                text-xs
+                font-extralight text-gray-300
+                text-left
+                hidden
+                sm:inline        
+                    ">
+            The more songs you will pick, better the recommendations!</span>
     <!-- clear list button -->
 
         <button

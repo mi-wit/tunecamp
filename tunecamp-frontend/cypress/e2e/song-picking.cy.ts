@@ -25,6 +25,12 @@ describe('Test search field', () => {
     cy.get('#mat-option-0').click();
     cy.get('.mat-mdc-autocomplete-trigger').should('be.empty');
   });
+
+  it('shows no results', () => {
+    cy.visit('/song-picking');
+    cy.get('.mat-mdc-autocomplete-trigger').click().type('lkjhgfdsazxcvbnmpoiuytrewq');
+    cy.contains('No results');
+  });
 }) 
 
 describe('Test song picking', () => {
@@ -53,5 +59,45 @@ describe('Test song picking', () => {
       .should('contain', 'Radiohead')
       .and('contain', 'Queen')
       .and('contain', 'Coldplay');
+  });
+
+  it('picks song and removes it', () => {
+    cy.visit('/song-picking');
+
+    cy.get('.mat-mdc-autocomplete-trigger').click().type('Radiohead Creep');
+    cy.get('.searchResults').should((items) => {
+      expect(items).to.contain.text('Radiohead');
+    });
+    cy.get('.searchResults').contains('Creep').click();
+
+
+    cy.contains('Remove').click();
+    cy.contains('Creep').should('not.exist');
+  });
+
+  it('activates get recommendations button', () => {
+    cy.visit('/song-picking');
+
+    cy.get('.mat-mdc-autocomplete-trigger').click().type('Radiohead Creep');
+    cy.get('.searchResults').should((items) => {
+      expect(items).to.contain.text('Radiohead');
+    });
+    cy.get('.searchResults').contains('Creep').click();
+
+
+    cy.contains('Get Recommendations').should('not.be.disabled');
+  });
+
+  it('deactivates get recommendations button', () => {
+    cy.visit('/song-picking');
+
+    cy.get('.mat-mdc-autocomplete-trigger').click().type('Radiohead Creep');
+    cy.get('.searchResults').should((items) => {
+      expect(items).to.contain.text('Radiohead');
+    });
+    cy.get('.searchResults').contains('Creep').click();
+
+    cy.contains('Remove').click();
+    cy.contains('Get Recommendations').should('be.disabled');
   });
 })

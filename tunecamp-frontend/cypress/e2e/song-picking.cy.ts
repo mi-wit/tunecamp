@@ -16,19 +16,19 @@ describe('Test search field', () => {
   it('searches for a song', () => {
     cy.visit('/song-picking');
     cy.get('.mat-mdc-autocomplete-trigger').click().type('Radiohead Creep');
-    cy.get('#mat-option-0').contains('Radiohead');
+    cy.get('.searchResults').contains('Radiohead');
   });
 
   it('clears search field after picking song', () => {
     cy.visit('/song-picking');
     cy.get('.mat-mdc-autocomplete-trigger').click().type('Radiohead Creep');
-    cy.get('#mat-option-0').click();
+    cy.get('.searchResults').contains('Creep').click();
     cy.get('.mat-mdc-autocomplete-trigger').should('be.empty');
   });
 
   it('shows no results', () => {
     cy.visit('/song-picking');
-    cy.get('.mat-mdc-autocomplete-trigger').click().type('lkjhgfdsazxcvbnmpoiuytrewq88888888888888888888888888');
+    cy.get('.mat-mdc-autocomplete-trigger').click().type('lkjhgfdsazxcvbnmpoiuytrs yg fyfuahsf shufs');
     cy.get('.searchResults').contains('No results');
   });
 }) 

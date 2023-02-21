@@ -3,21 +3,33 @@
     <input type="text"
         class="shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-101 duration-300 ease-in-out"
         placeholder="Search for songs" aria-label="Number" [formControl]="searchField" [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-        <mat-option class="bg-gray-900 searchResults" *ngFor="let song of filteredOptions | async" 
-                    
-                    (onSelectionChange)="onTrackPick(song)">
-            <div class="py-2 flex">
-                <div class="flex-shrink-0">
-                    <img class="inline mr-4" [src]="song.album.images[2].url" alt="album image">
-                </div>
-                <div>
-                    <h3 class="text-sm font-semibold text-gray-200">{{song.name}}</h3>
-                    <span class="text-sm text-gray-400">{{song.artists[0].name}}</span>
-                    <span class="text-sm text-gray-400" *ngFor="let artist of song.artists.slice(1)">, {{artist.name}}</span>
-                </div>
-            </div>
-            
-        </mat-option>
+    <mat-autocomplete #auto="matAutocomplete" class="bg-gray-900">
+        <ng-container *ngIf="filteredOptions | async as songs; else loading">
+            <ng-container *ngIf="songs.length; else noItems">
+                <mat-option class="bg-gray-900 searchResults" *ngFor="let song of songs" (onSelectionChange)="onTrackPick(song)">
+                        <div class="py-2 flex">
+                            <div class="flex-shrink-0">
+                                <img class="inline mr-4" [src]="song.album.images[2].url" alt="album image">
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-semibold text-gray-200">{{song.name}}</h3>
+                                <span class="text-sm text-gray-400">{{song.artists[0].name}}</span>
+                                <span class="text-sm text-gray-400" *ngFor="let artist of song.artists.slice(1)">, {{artist.name}}</span>
+                            </div>
+                        </div>
+                </mat-option>
+            </ng-container>
+            <ng-template #noItems>
+                <mat-option disabled="true" class="bg-gray-900 searchResults">
+                    <div class="py-2 flex">
+                        <div class="flex-shrink-0">
+                            No results
+                        </div>
+                    </div>
+                </mat-option>
+            </ng-template>
+                        
+        </ng-container>
+        <ng-template #loading>loading animation...</ng-template>
 
     </mat-autocomplete>

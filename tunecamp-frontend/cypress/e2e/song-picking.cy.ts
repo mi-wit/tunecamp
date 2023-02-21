@@ -28,8 +28,8 @@ describe('Test search field', () => {
 
   it('shows no results', () => {
     cy.visit('/song-picking');
-    cy.get('.mat-mdc-autocomplete-trigger').click().type('lkjhgfdsazxcvbnmpoiuytrewq');
-    cy.contains('No results');
+    cy.get('.mat-mdc-autocomplete-trigger').click().type('lkjhgfdsazxcvbnmpoiuytrewq88888888888888888888888888');
+    cy.get('.searchResults').contains('No results');
   });
 }) 
 

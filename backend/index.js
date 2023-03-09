@@ -3,7 +3,6 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import express from 'express';
 import bodyParser from 'express';
 import cors from 'cors';
-import router from 'express';
 
 const app = new express();
 const port = 3000
@@ -34,10 +33,11 @@ await spotifyWebApi.clientCredentialsGrant().then(
     }
 );
 
+let spotifySongsData;
+let rs;
+
 app.post('/api/recommend', wrapAsync( async (req, res) => {
     const songs = req.body;
-    const rs = await python("./recomendation.py");
-    const spotifySongsData = await rs.read_data();
 
     const songsNotInDataSet = await rs.get_songs_not_present_in_dataset(spotifySongsData, songs);
     const missingSongs = await getMissingSongs(await songsNotInDataSet.valueOf());
@@ -49,7 +49,6 @@ app.post('/api/recommend', wrapAsync( async (req, res) => {
     res.status(200).json(tracksWithAllInfo);
 
 
-    python.exit();
 
 }));
 
@@ -123,7 +122,11 @@ app.get('/api/search', wrapAsync(async (req, res) => {
 
 }));
 
-app.listen(port, () => {
+app.listen(port, async () => {
+    // load python script
+    rs = await python("./recomendation.py");
+    // load songs dataset
+    spotifySongsData = await rs.read_data();
     console.log(`Example app listening on port ${port}`)
 })
 

@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw());
 app.use(cors());
 
-app.use(express.static('dist/tunecamp-frontend', {root: '.'}));
+// app.use(express.static('dist/tunecamp-frontend', {root: '.'}));
 
 // credentials are optional
 var spotifyWebApi = new SpotifyWebApi({

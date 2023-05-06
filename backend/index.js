@@ -40,7 +40,9 @@ app.post('/api/recommend', wrapAsync( async (req, res) => {
     const songs = req.body;
 
     const songsNotInDataSet = await rs.get_songs_not_present_in_dataset(spotifySongsData, songs);
+    // console.log(['songs not in dataset', songsNotInDataSet, 'all songs', songs]);
     const missingSongs = await getMissingSongs(await songsNotInDataSet.valueOf());
+    // console.log(['founbd songs', missingSongs]);
     const supplementedDataset = await fillDataSetWithMissingSongs(spotifySongsData, missingSongs);
     const results = await rs.recommend_songs(songs, supplementedDataset);
     
@@ -93,6 +95,7 @@ async function getMissingSongs(_songsNotInDataset) {
 
 async function fillDataSetWithMissingSongs(_spotifySongsData, _missingSongs) {
     const pd = await python('pandas');
+    let songs = [];
     for await (const missingSong of _missingSongs) {
         delete missingSong.type;
         delete missingSong.uri;
@@ -101,7 +104,7 @@ async function fillDataSetWithMissingSongs(_spotifySongsData, _missingSongs) {
         delete missingSong.time_signature;
 
         const song = await pd.DataFrame([missingSong]);
-        _spotifySongsData = await _spotifySongsData.append$(song, { ignore_index: true });
+        _spotifySongsData = await pd.concat$([_spotifySongsData, song], { ignore_index: true });
     }
 
     return _spotifySongsData;

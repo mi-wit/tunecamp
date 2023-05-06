@@ -103,9 +103,10 @@ async function fillDataSetWithMissingSongs(_spotifySongsData, _missingSongs) {
         delete missingSong.analysis_url;
         delete missingSong.time_signature;
 
-        const song = await pd.DataFrame([missingSong]);
-        _spotifySongsData = await pd.concat$([_spotifySongsData, song], { ignore_index: true });
+        songs.push(await missingSong);
     }
+    const coll = await pd.DataFrame(songs);
+    _spotifySongsData = await pd.concat$([_spotifySongsData, coll], { ignore_index: true });
 
     return _spotifySongsData;
 }

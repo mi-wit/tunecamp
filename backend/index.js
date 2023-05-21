@@ -3,15 +3,28 @@ import SpotifyWebApi from 'spotify-web-api-node';
 import express from 'express';
 import bodyParser from 'express';
 import cors from 'cors';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const publicDist = path.join(__dirname, 'tunecamp-frontend');
 
 const app = new express();
-const port = 3000
+const port = 8080;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
-app.use(cors());
+// app.use(cors());
+app.use(cors({ origin: 'http://localhost:8080'}));
 
-app.use(express.static('dist/tunecamp-frontend', {root: '.'}));
+app.get('/', function(req, res) {
+    res.sendFile(path.join(publicDist, 'index.html'));
+});
+
+app.use('/', express.static(publicDist));
+
 
 // credentials are optional
 var spotifyWebApi = new SpotifyWebApi({
